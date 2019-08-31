@@ -1,7 +1,12 @@
+// Imports
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+/**
+ * Component representing each cell from the tic-tac-toe
+ * @param {*} props 
+ */
 function Square(props) {
     return (
         <button className="square" onClick={props.onClick}>
@@ -10,6 +15,9 @@ function Square(props) {
     );
 }
 
+/**
+ * Component Representing all the cells together
+ */
 class Board extends React.Component {
 
     renderSquare(i) {
@@ -44,6 +52,12 @@ class Board extends React.Component {
     }
 }
 
+/**
+ * Component representing the game itself, 
+ * it has all the business rules, like the 
+ * state of the app and the history of the 
+ * moves
+ */
 class Game extends React.Component {
 
     constructor(props) {
@@ -89,10 +103,10 @@ class Game extends React.Component {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner  = calculateWinner(current.squares);
-        let status    = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        let status    = `Next player: ${(this.state.xIsNext ? 'X' : 'O')}`;
 
         if (winner) {
-            status = 'Winner: ' + winner;
+            status = `Winner: ${winner}`;
         }
 
         const moves = history.map( (step, move) => {
@@ -102,7 +116,7 @@ class Game extends React.Component {
             
             return (
                 <li key={move}>
-                    <button onClick={ () => this.jumpTo(move) }>
+                    <button onClick={ _ => this.jumpTo(move) }>
                         {desc}
                     </button>
                 </li>
@@ -133,6 +147,11 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
+/**
+ * Detect if the game has a winner
+ * 
+ * @param {*} squares 
+ */
 function calculateWinner(squares) {
     const lines = [
         [0, 1, 2],
